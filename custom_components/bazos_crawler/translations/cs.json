@@ -2,72 +2,52 @@
   "config": {
     "step": {
       "user": {
-        "title": "Nastavení Bazoš",
+        "title": "Nastavení Bazos",
         "data": {
-          "search_term": {
-            "name": "Hledaný termín",
-            "description": "Zadej text, který chceš vyhledávat"
-          },
-          "update_interval": {
-            "name": "Interval aktualizace (s)",
-            "description": "Jak často se má vyhledávání obnovovat (v sekundách)"
-          },
-          "search_exact": {
-            "name": "Pouze přesná shoda",
-            "description": "Hledat pouze přesné shody zadaného výrazu"
-          },
-          "search_psc": {
-            "name": "PSČ",
-            "description": "Zadej 5místné PSČ (např. 11000)"
-          },
-          "search_okoli": {
-            "name": "V okruhu (km)",
-            "description": "Vzdálenost od PSČ v kilometrech"
-          },
-          "search_cenaod": {
-            "name": "Cena od",
-            "description": "Minimální cena"
-          },
-          "search_cenado": {
-            "name": "Cena do",
-            "description": "Maximální cena"
-          }
+          "search_term": "Hledaný termín",
+          "update_interval": "Interval aktualizace (s)",
+          "search_exact": "Pouze přesná shoda",
+          "search_psc": "PSČ",
+          "search_okoli": "V okruhu (km)",
+          "search_cenaod": "Cena OD",
+          "search_cenado": "Cena DO"
+        },
+        "description": {
+          "search_term": "Zadej KLÍČ, který chceš vyhledávat",
+          "update_interval": "Jak často se má vyhledávání obnovovat (v sekundách)",
+          "search_exact": "Hledej pouze přesnou shodu -- především v případě mezery mezi slovy se nepočítá \"termín_A něco něco termín_B\", musí být přesná shoda",
+          "search_psc": "Zadej 5místné PSČ (např. 11000)",
+          "search_okoli": "Hledat v okruhu XXX km okolo PSČ",
+          "search_cenaod": "Minimální cena",
+          "search_cenado": "Maximální cena"
         }
       },
       "init": {
-        "title": "Možnosti Bazoš",
+        "title": "Nastavení Bazos",
         "data": {
-          "update_interval": {
-            "name": "Interval aktualizace (s)",
-            "description": "Jak často se má vyhledávání obnovovat (v sekundách)"
-          },
-          "search_exact": {
-            "name": "Pouze přesná shoda",
-            "description": "Hledat pouze přesné shody zadaného výrazu"
-          },
-          "search_psc": {
-            "name": "PSČ",
-            "description": "Zadej 5místné PSČ (např. 11000)"
-          },
-          "search_okoli": {
-            "name": "V okruhu (km)",
-            "description": "Vzdálenost od PSČ v kilometrech"
-          },
-          "search_cenaod": {
-            "name": "Cena od",
-            "description": "Minimální cena"
-          },
-          "search_cenado": {
-            "name": "Cena do",
-            "description": "Maximální cena"
-          }
+          "search_term": "Hledaný termín",
+          "update_interval": "Interval aktualizace (s)",
+          "search_exact": "Pouze přesná shoda",
+          "search_psc": "PSČ",
+          "search_okoli": "V okruhu (km)",
+          "search_cenaod": "Cena OD",
+          "search_cenado": "Cena DO"
+        },
+        "description": {
+          "search_term": "Zadej KLÍČ, který chceš vyhledávat",
+          "update_interval": "Jak často se má vyhledávání obnovovat (v sekundách)",
+          "search_exact": "Hledej pouze přesnou shodu -- především v případě mezery mezi slovy se nepočítá \"termín_A něco něco termín_B\", musí být přesná shoda",
+          "search_psc": "Zadej 5místné PSČ (např. 11000)",
+          "search_okoli": "Hledat v okruhu XXX km okolo PSČ",
+          "search_cenaod": "Minimální cena",
+          "search_cenado": "Maximální cena"
         }
       }
     },
     "error": {
-      "invalid_number": "Musí být číslo",
-      "invalid_psc": "Zadej platné PSČ (5 číslic)",
-      "empty": "Pole nesmí být prázdné"
+      "invalid_number": "Nevalidní číslo - fakt to bylo číslo?",
+      "invalid_psc": "PSČ musí mít 5 číslic",
+      "empty": "Toto pole nesmí být prázdné"
     }
   }
 }

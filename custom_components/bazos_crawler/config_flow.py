@@ -39,13 +39,13 @@ class BazosConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
         schema = vol.Schema(
             {
-                vol.Required(CONF_SEARCH_TERM): str,
+                vol.Required(CONF_SEARCH_TERM): cv.string,
                 vol.Optional(CONF_UPDATE_INTERVAL, default=DEFAULT_UPDATE_INTERVAL): cv.positive_int,
-                vol.Optional(CONF_SEARCH_EXACT, default=False): bool,
-                vol.Optional(CONF_PSC, default=""): str,
-                vol.Optional(CONF_OKOLI, default="25"): str,
-                vol.Optional(CONF_CENAOD, default=""): str,
-                vol.Optional(CONF_CENADO, default=""): str,
+                vol.Optional(CONF_SEARCH_EXACT, default=False): cv.boolean,
+                vol.Optional(CONF_PSC, default=""): cv.string,
+                vol.Optional(CONF_OKOLI, default="25"): cv.string,
+                vol.Optional(CONF_CENAOD, default=""): cv.string,
+                vol.Optional(CONF_CENADO, default=""): cv.string,
             }
         )
 
