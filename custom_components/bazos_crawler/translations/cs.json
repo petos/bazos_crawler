@@ -11,15 +11,6 @@
           "search_okoli": "V okruhu (km)",
           "search_cenaod": "Cena OD",
           "search_cenado": "Cena DO"
-        },
-        "description": {
-          "search_term": "Zadej KLÍČ, který chceš vyhledávat",
-          "update_interval": "Jak často se má vyhledávání obnovovat (v sekundách)",
-          "search_exact": "Hledej pouze přesnou shodu -- především v případě mezery mezi slovy se nepočítá \"termín_A něco něco termín_B\", musí být přesná shoda",
-          "search_psc": "Zadej 5místné PSČ (např. 11000)",
-          "search_okoli": "Hledat v okruhu XXX km okolo PSČ",
-          "search_cenaod": "Minimální cena",
-          "search_cenado": "Maximální cena"
         }
       },
       "init": {
@@ -32,15 +23,6 @@
           "search_okoli": "V okruhu (km)",
           "search_cenaod": "Cena OD",
           "search_cenado": "Cena DO"
-        },
-        "description": {
-          "search_term": "Zadej KLÍČ, který chceš vyhledávat",
-          "update_interval": "Jak často se má vyhledávání obnovovat (v sekundách)",
-          "search_exact": "Hledej pouze přesnou shodu -- především v případě mezery mezi slovy se nepočítá \"termín_A něco něco termín_B\", musí být přesná shoda",
-          "search_psc": "Zadej 5místné PSČ (např. 11000)",
-          "search_okoli": "Hledat v okruhu XXX km okolo PSČ",
-          "search_cenaod": "Minimální cena",
-          "search_cenado": "Maximální cena"
         }
       }
     },

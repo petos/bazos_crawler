@@ -11,15 +11,6 @@
           "search_okoli": "Radius (km)",
           "search_cenaod": "Price from",
           "search_cenado": "Price to"
-        },
-        "description": {
-          "search_term": "Enter the text you want to search for",
-          "update_interval": "How often the search should refresh (in seconds)",
-          "search_exact": "Search only for exact matches of the given term",
-          "search_psc": "Enter a 5-digit ZIP code (e.g. 11000)",
-          "search_okoli": "Distance from ZIP code in kilometers",
-          "search_cenaod": "Minimum price",
-          "search_cenado": "Maximum price"
         }
       },
       "init": {
@@ -32,15 +23,6 @@
           "search_okoli": "Radius (km)",
           "search_cenaod": "Price from",
           "search_cenado": "Price to"
-        },
-        "description": {
-          "search_term": "Enter the text you want to search for",
-          "update_interval": "How often the search should refresh (in seconds)",
-          "search_exact": "Search only for exact matches of the given term",
-          "search_psc": "Enter a 5-digit ZIP code (e.g. 11000)",
-          "search_okoli": "Distance from ZIP code in kilometers",
-          "search_cenaod": "Minimum price",
-          "search_cenado": "Maximum price"
         }
       }
     },
