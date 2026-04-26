@@ -1,0 +1,35 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Nastavení Bazos",
+        "data": {
+          "search_term": "Hledaný termín",
+          "update_interval": "Interval aktualizace (s)",
+          "search_exact": "Pouze přesná shoda",
+          "search_psc": "PSČ",
+          "search_okoli": "V okruhu (km)",
+          "search_cenaod": "Cena OD",
+          "search_cenado": "Cena DO"
+        }
+      },
+      "init": {
+        "title": "Nastavení Bazos",
+        "data": {
+          "search_term": "Hledaný termín",
+          "update_interval": "Interval aktualizace (s)",
+          "search_exact": "Pouze přesná shoda",
+          "search_psc": "PSČ",
+          "search_okoli": "V okruhu (km)",
+          "search_cenaod": "Cena OD",
+          "search_cenado": "Cena DO"
+        }
+      }
+    },
+    "error": {
+      "invalid_number": "Nevalidní číslo - fakt to bylo číslo?",
+      "invalid_psc": "PSČ musí mít 5 číslic",
+      "empty": "Toto pole nesmí být prázdné"
+    }
+  }
+}

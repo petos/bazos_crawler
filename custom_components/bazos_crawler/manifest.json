@@ -1,5 +1,5 @@
 {
-  "domain": "bazosCrawler",
+  "domain": "bazos_crawler",
   "name": "Bazos Crawler",
   "codeowners": [],
   "config_flow": true,

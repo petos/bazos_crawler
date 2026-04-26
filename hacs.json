@@ -1,5 +1,5 @@
 {
-  "name": "bazosCrawler",
+  "name": "bazos_crawler",
   "content_in_root": false,
   "country": ["CZ"],
   "homeassistant": "2023.9.0",

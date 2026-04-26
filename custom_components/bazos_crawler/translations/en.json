@@ -1,0 +1,35 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Bazos setup",
+        "data": {
+          "search_term": "Search term",
+          "update_interval": "Update interval (s)",
+          "search_exact": "Exact match only",
+          "search_psc": "ZIP code",
+          "search_okoli": "Radius (km)",
+          "search_cenaod": "Price from",
+          "search_cenado": "Price to"
+        }
+      },
+      "init": {
+        "title": "Bazos setup",
+        "data": {
+          "search_term": "Search term",
+          "update_interval": "Update interval (s)",
+          "search_exact": "Exact match only",
+          "search_psc": "ZIP code",
+          "search_okoli": "Radius (km)",
+          "search_cenaod": "Price from",
+          "search_cenado": "Price to"
+        }
+      }
+    },
+    "error": {
+      "invalid_number": "Must be a number",
+      "invalid_psc": "Enter a valid ZIP code (5 digits)",
+      "empty": "Field cannot be empty"
+    }
+  }
+}
