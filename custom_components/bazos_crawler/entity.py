@@ -24,7 +24,7 @@ class BazosEntity(CoordinatorEntity):
 
     @property
     def extra_state_attributes(self):
-        "Exact" = self.coordinator.url
+        url = self.coordinator.url
         return {
             "search_url": url,
             "search_link": f"[Open Bazos]({url})"
