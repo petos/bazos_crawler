@@ -29,13 +29,13 @@ Prochází bazoš každých 5 minut a dle zadaných kritérií (klíčové slovo
 
 ## Konfigurace - UI konfigurace:
 - Nastavení > Zařízení a služby > Přidat integraci
-  - Hledaný termín: KLÍČ, který chceš vyhledávat
-  - Interval aktualizace (s): Jak často se má vyhledávání obnovovat (v sekundách). Výchozí hodnota je 5 minut, NEdoporucuji snižovat pod 60 sekund.
-  - Pouze přesná shoda: Hledej pouze *přesnou shodu* -- především v případě mezery mezi slovy se nepočítá "termín_A něco něco termín_B", musí být přesná shoda
-  - PSČ: 5místné číslo
-  - V okruhu (km): Hledat v okruhu XXX km okolo PSČ. Pokud PSČ není zadané, ignoruje se.
-  - Cena OD: Minimální cena
-  - Cena DO: Maximální cena
+  - `Hledaný termín`: KLÍČ, který chceš vyhledávat
+  - `Interval aktualizace (s)`: Jak často se má vyhledávání obnovovat (v sekundách). Výchozí hodnota je 5 minut, NEdoporucuji snižovat pod 60 sekund.
+  - `Pouze přesná shoda`: Hledej pouze *přesnou shodu* -- především v případě mezery mezi slovy se nepočítá "termín_A něco něco termín_B", musí být přesná shoda
+  - `PSČ`: 5místné číslo
+  - `V okruhu (km)`: Hledat v okruhu XXX km okolo PSČ. Pokud PSČ není zadané, ignoruje se.
+  - `Cena OD`: Minimální cena
+  - `Cena DO`: Maximální cena
 - Automaticky vytvoří senzory
 - Aktualizace hodnot probíhá jednou za 5 minut nebo zvolený časový interval.
 

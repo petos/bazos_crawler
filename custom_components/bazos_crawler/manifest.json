@@ -3,9 +3,9 @@
   "name": "Bazos Crawler",
   "codeowners": [],
   "config_flow": true,
-  "documentation": "https://github.com/petos/bazosCrawler",
+  "documentation": "https://github.com/petos/bazos_crawler",
   "iot_class": "cloud_polling",
-  "issue_tracker": "https://github.com/petos/bazosCrawler/issues",
+  "issue_tracker": "https://github.com/petos/bazos_crawler/issues",
   "requirements": ["beautifulsoup4==4.12.3","charset-normalizer<4"],
-  "version": "0.1.1"
+  "version": "0.1.2"
 }
