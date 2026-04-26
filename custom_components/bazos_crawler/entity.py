@@ -1,6 +1,6 @@
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
-from .const import DOMAIN
+from .const import DOMAIN,CONF_SEARCH_EXACT
 
 
 class BazosEntity(CoordinatorEntity):
@@ -18,9 +18,13 @@ class BazosEntity(CoordinatorEntity):
             "model": "Search",
         }
 
+    # ~ @property
+    # ~ def extra_state_attributes(self):
+        # ~ return "exact": self.coordinator.CONF_SEARCH_EXACT
+
     @property
     def extra_state_attributes(self):
-        url = self.coordinator.url
+        "Exact" = self.coordinator.url
         return {
             "search_url": url,
             "search_link": f"[Open Bazos]({url})"

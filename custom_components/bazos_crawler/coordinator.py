@@ -1,8 +1,12 @@
 from datetime import timedelta
 from urllib.parse import quote
+import logging
 
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
+from homeassistant.helpers.update_coordinator import UpdateFailed
+from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
+from .api import BazosApi
 from .const import (
     DOMAIN,
     BASE_URL,
@@ -13,12 +17,14 @@ from .const import (
     CONF_CENADO,
     CONF_SEARCH_EXACT,
     CONF_UPDATE_INTERVAL,
+    DEFAULT_UPDATE_INTERVAL,
 )
 
+_LOGGER = logging.getLogger(__name__)
 
 def build_url(exact: bool, term: str, psc, okoli, cenaod, cenado):
     if exact:
-        term = quote(f'"{term}"')
+        term = quote(f'"{term}"', safe="")
 
     return BASE_URL.format(
         term=term,
@@ -30,18 +36,19 @@ def build_url(exact: bool, term: str, psc, okoli, cenaod, cenado):
 
 
 class BazosDataUpdateCoordinator(DataUpdateCoordinator):
-    def __init__(self, hass, config_entry, api):
+    def __init__(self, hass, config_entry):
         self.config_entry = config_entry
-        self.api = api
+        session = async_get_clientsession(hass)
+        self.api = BazosApi(session)
 
         update_interval = config_entry.options.get(
             CONF_UPDATE_INTERVAL,
             config_entry.data.get(CONF_UPDATE_INTERVAL),
-        )
+        ) or DEFAULT_UPDATE_INTERVAL
 
         super().__init__(
             hass,
-            logger=__import__(__name__).__dict__.get("LOGGER"),
+            _LOGGER,
             name=DOMAIN,
             update_interval=timedelta(seconds=update_interval),
         )
@@ -63,7 +70,9 @@ class BazosDataUpdateCoordinator(DataUpdateCoordinator):
     async def _async_update_data(self):
         url = self.url
 
-        # DEBUG (doporučeno)
-        self.logger.debug("Fetching URL: %s", url)
+        _LOGGER.debug("Fetching URL: %s", url)
 
-        return await self.api.fetch(url)
+        try:
+            return await self.api.fetch(url)
+        except Exception as err:
+            raise UpdateFailed(f"Error fetching data: {err}") from err

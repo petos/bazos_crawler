@@ -1,42 +1,39 @@
 import logging
-import requests
 import re
+import asyncio
 from datetime import datetime
 
+from aiohttp import ClientTimeout
 
 _LOGGER = logging.getLogger(__name__)
-from .const import BASE_URL
 
 
 class BazosApi:
-    def __init__(self):
-        self.session = requests.Session()
-        self.session.headers.update(
-            {
-                "User-Agent": (
-                    "Mozilla/5.0 (X11; Linux x86_64) "
-                    "AppleWebKit/537.36 (KHTML, like Gecko) "
-                    "Chrome/120.0 Safari/537.36"
-                )
-            }
-        )
+    def __init__(self, session):
+        self._session = session
+        self._headers = {
+            "User-Agent": (
+                "Mozilla/5.0 (X11; Linux x86_64) "
+                "AppleWebKit/537.36 (KHTML, like Gecko) "
+                "Chrome/120.0 Safari/537.36"
+            )
+        }
 
     # -------------------------
-    # PUBLIC API
+    # PUBLIC API (ASYNC)
     # -------------------------
-    def fetch(self, url: str):
-
+    async def fetch(self, url: str):
         offset = 0
         all_items = []
         seen = set()
 
         while True:
-            
             _LOGGER.debug("url: %s", url)
             _LOGGER.debug("offset: %d", offset)
+
             pagedurl = self._getpagedurl(url, offset)
-            r = self.session.get(pagedurl, timeout=10)
-            html = r.text
+
+            html = await self._get(pagedurl)
 
             blocks = self._extract_blocks(html)
 
@@ -52,7 +49,6 @@ class BazosApi:
                 item_id = self._extract_id(link)
 
                 if not item_id:
-                    _LOGGER.debug("Skipping block (no id): %s", str(b)[:200])
                     continue
 
                 if item_id in seen:
@@ -86,24 +82,37 @@ class BazosApi:
 
             offset += 20
 
+            # 🔥 anti-ban delay
+            await asyncio.sleep(0.5)
+
         _LOGGER.debug("Total unique items: %s", len(all_items))
         return {"items": all_items}
+
+    # -------------------------
+    # HTTP (ASYNC)
+    # -------------------------
+    async def _get(self, url: str) -> str:
+        timeout = ClientTimeout(total=10)
+
+        async with self._session.get(
+            url,
+            headers=self._headers,
+            timeout=timeout,
+        ) as resp:
+            resp.raise_for_status()
+            return await resp.text()
 
     # -------------------------
     # BLOCK EXTRACTION
     # -------------------------
     def _extract_blocks(self, html: str):
-        """
-        NOTE:
-        intentionally NOT regex-based anymore for stability
-        """
         from bs4 import BeautifulSoup
 
         soup = BeautifulSoup(html, "html.parser")
         return soup.select("div.inzeraty.inzeratyflex")
 
     # -------------------------
-    # SELF-HEALING LINK
+    # LINK EXTRACTION
     # -------------------------
     def _extract_link(self, block):
         tag = block.select_one(".inzeratynadpis a")
@@ -158,10 +167,7 @@ class BazosApi:
     def _extract_date(self, block):
         text = block.get_text(" ", strip=True)
 
-        match = re.search(
-            r"\[(\d{1,2})\.(\d{1,2})\.\s*(\d{4})\]",
-            text
-        )
+        match = re.search(r"\[(\d{1,2})\.(\d{1,2})\.\s*(\d{4})\]", text)
 
         if not match:
             return None
@@ -173,5 +179,5 @@ class BazosApi:
         except ValueError:
             return None
 
-    def _getpagedurl( self, url: str, offset: int):
-        return "{url}&crz={offset}".format(url=url, offset=offset)
+    def _getpagedurl(self, url: str, offset: int):
+        return f"{url}&crz={offset}"
