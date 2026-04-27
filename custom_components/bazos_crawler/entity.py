@@ -32,4 +32,4 @@ class BazosEntity(CoordinatorEntity):
 
     @property
     def unique_id(self):
-        return f"{self.coordinator.config_entry.entry_id}_{self._slug}"
+        return f"{self.coordinator.config_entry.entry_id}_{self._slug}_"

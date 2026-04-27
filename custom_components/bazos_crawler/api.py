@@ -47,6 +47,7 @@ class BazosApi:
             for b in blocks:
                 link = self._extract_link(b)
                 item_id = self._extract_id(link)
+                price = self._extract_price(b)
 
                 if not item_id:
                     continue
@@ -60,12 +61,15 @@ class BazosApi:
                 title = self._extract_title(b)
                 date = self._extract_date(b)
 
+                _LOGGER.info("New item: %s, Title: %s, Link: %s, Date: %s, Price: %d", item_id, title, link, date, price)
+
                 all_items.append(
                     {
                         "id": item_id,
                         "title": title,
                         "link": link,
                         "date": date,
+                        "price": price,
                     }
                 )
 
@@ -82,7 +86,6 @@ class BazosApi:
 
             offset += 20
 
-            # 🔥 anti-ban delay
             await asyncio.sleep(0.5)
 
         _LOGGER.debug("Total unique items: %s", len(all_items))
@@ -160,6 +163,16 @@ class BazosApi:
 
         text = block.get_text(" ", strip=True)
         return text[:120] if text else ""
+
+    # -------------------------
+    # PRICE EXTRACTION
+    # -------------------------
+    def _extract_price(self, block):
+        tag = block.select_one(".inzeratycena")
+        if tag:
+            text = tag.get_text(strip=True)
+            number = re.sub(r"[^\d]", "", text)
+            return int(number) if number else None
 
     # -------------------------
     # DATE EXTRACTION
