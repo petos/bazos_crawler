@@ -19,7 +19,7 @@ class BazosOpenSearchButton(BazosEntity, ButtonEntity):
         super().__init__(coordinator, term)
 
         self._attr_name = f"Bazos {self._term} otevřít link"
-        self._attr_unique_id = f"{coordinator.config_entry.entry_id}_{self._slug}_open"
+        self._attr_unique_id = f"{self.coordinator.config_entry.entry_id}_open"
 
 
     @property

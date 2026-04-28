@@ -14,6 +14,7 @@ async def async_setup_entry(hass, entry, async_add_entities):
         [
             BazosTotalSensor(coordinator, term),
             BazosTodaySensor(coordinator, term),
+            BazosNewCountSensor(coordinator, term),
         ]
     )
 
@@ -24,7 +25,7 @@ class BazosTotalSensor(BazosEntity, SensorEntity):
 
     @property
     def unique_id(self):
-        return f"{DOMAIN}_{self._slug}_total"
+        return f"{self.coordinator.config_entry.entry_id}_total"
 
     @property
     def native_value(self):
@@ -38,7 +39,24 @@ class BazosTotalSensor(BazosEntity, SensorEntity):
     def icon(self):
         return "mdi:counter"
 
+class BazosNewCountSensor(BazosEntity, SensorEntity):
+    @property
+    def name(self):
+        return f"Bazos {self._term} nové"
 
+    @property
+    def unique_id(self):
+        return f"{self.coordinator.config_entry.entry_id}_new_count"
+
+    @property
+    def native_value(self):
+        return self.coordinator.data.get("new_count", 0)
+
+    @property
+    def extra_state_attributes(self):
+        return {
+            "new_items": self.coordinator.data.get("new_items", [])[:10]
+        }
 
 class BazosTodaySensor(BazosEntity, SensorEntity):
     @property
@@ -47,7 +65,7 @@ class BazosTodaySensor(BazosEntity, SensorEntity):
 
     @property
     def unique_id(self):
-        return f"{DOMAIN}_{self._slug}_today"
+        return f"{self.coordinator.config_entry.entry_id}_today"
 
     @property
     def native_value(self):

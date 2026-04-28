@@ -17,9 +17,9 @@ Prochází bazoš každých 5 minut a dle zadaných kritérií (klíčové slovo
   - Nahrajte obsah `custom_components/bazos_crawler/` do `/config/custom_components/bazos_crawler/`
 
 ## Senzory
- - `Celkem` -- Celkovy počet nalezených inzerátů s daným klíčovym slovem
- - `Dnes` -- Počet přidaných inzerátu dnes
- - `Nové dnes` -- Binární sensor - překlopí se do `True` ve chvíli, kdy najde nový, zatím neviděný inzerát. Při dalším běhu, ve výchozím nastavení 5 minut, se překlopí zpět do `False`. 
+ - `sensor.bazos_HLEDANY_KLIC_celkem` -- `Celkem` -- Celkovy počet nalezených inzerátů s daným klíčovym slovem
+ - `sensor.bazos_HLEDANY_KLIC__dnes` -- `Dnes` -- Počet přidaných inzerátu dnes
+ - `binary_sensor.bazos_HLEDANY_KLIC` -- Binární sensor - překlopí se do `True` ve chvíli, kdy najde nový, zatím neviděný inzerát. Při dalším běhu, ve výchozím nastavení 5 minut, se překlopí zpět do `False`. 
 
 ### Atributy
  - URL na search do Bazose. 
@@ -41,6 +41,103 @@ Prochází bazoš každých 5 minut a dle zadaných kritérií (klíčové slovo
 
 ## Jak najít přímo URL?
 Otevřete si podrobnosti libovolného senzoru (klikněte na senzor třeba Total) -> Tři tečky -> Podrobnosti. Dole je mezi atributy je "URL". 
+
+## Automatizace
+
+### Event: `bazos_new_ads`
+
+Při nalezení nových inzerátů integrace vyvolá event:
+```python
+self.hass.bus.async_fire(
+    "bazos_new_ads",
+    {
+        "entry_id": "...",
+        "term": "octavia",
+        "items": [...]
+    },
+)
+```
+
+### Základní trigger
+
+```yaml
+alias: Bazos – nové inzeráty
+trigger:
+  - platform: event
+    event_type: bazos_new_ads
+```
+
+### Notifikace do mobilu
+
+```yaml
+alias: Bazos notifikace
+trigger:
+  - platform: event
+    event_type: bazos_new_ads
+
+action:
+  - service: notify.mobile_app_tvuj_telefon
+    data:
+      title: "Bazos: nové inzeráty"
+      message: >
+        {% for item in trigger.event.data.items %}
+        {{ item.title }} - {{ item.price }} Kč
+        {{ item.url }}
+        
+        {% endfor %}
+```
+
+### Filtrování konkrétního search
+Pokud máš více searchů:
+```yaml
+condition:
+  - condition: template
+    value_template: >
+      {{ trigger.event.data.term == "octavia" }}
+```
+
+
+### Jen prvních N inzerátů
+
+```yaml
+message: >
+  {% for item in trigger.event.data.items[:3] %}
+  {{ item.title }} - {{ item.price }} Kč
+  {{ item.url }}
+  
+  {% endfor %}
+
+```
+###  Anti-spam (doporučeno)
+```yaml
+mode: single
+max_exceeded: silent
+```
+nebo delay:
+```yaml
+action:
+  - delay: "00:00:10"
+```
+###  Poznámky
+
+-   První běh → všechny inzeráty jsou „nové“
+-   Při změně filtru se historie resetuje
+-   Při odstranění integrace se storage smaže
+
+###  Příklad payloadu eventu
+
+```yaml
+event_type: bazos_new_ads
+data:
+  entry_id: "01KQ..."
+  term: "octavia"
+  items:
+    - title: "Škoda Octavia RS"
+      price: 250000
+      link: "https://..."
+
+```
+
 
 ## Hlášení chyb
 Nejlépe přes https://github.com/petos/bazos_crawler/issues

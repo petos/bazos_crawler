@@ -14,3 +14,6 @@ CONF_CENADO = "search_cenado"
 CONF_SEARCH_EXACT = "search_exact"
 
 CONF_UPDATE_INTERVAL = "update_interval"
+
+STORAGE_VERSION = 1
+STORAGE_PREFIX = "bazos_crawler_seen_ads_"

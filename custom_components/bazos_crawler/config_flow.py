@@ -14,7 +14,6 @@ from .const import (
     CONF_SEARCH_EXACT,
 )
 
-
 def _parse_optional_int(value, field):
     value = (value or "").strip()
     if value == "":
@@ -41,7 +40,7 @@ class BazosConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             {
                 vol.Required(CONF_SEARCH_TERM): cv.string,
                 vol.Optional(CONF_UPDATE_INTERVAL, default=DEFAULT_UPDATE_INTERVAL): cv.positive_int,
-                vol.Optional(CONF_SEARCH_EXACT, default=False): cv.boolean,
+                vol.Optional(CONF_SEARCH_EXACT, default=True): cv.boolean,
                 vol.Optional(CONF_PSC, default=""): cv.string,
                 vol.Optional(CONF_OKOLI, default="25"): cv.string,
                 vol.Optional(CONF_CENAOD, default=""): cv.string,
@@ -90,7 +89,7 @@ class BazosConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                     data={
                         CONF_SEARCH_TERM: term,
                         CONF_UPDATE_INTERVAL: user_input.get(CONF_UPDATE_INTERVAL),
-                        CONF_SEARCH_EXACT: user_input.get(CONF_SEARCH_EXACT, False),
+                        CONF_SEARCH_EXACT: user_input.get(CONF_SEARCH_EXACT, True),
                         CONF_PSC: psc,
                         CONF_OKOLI: okoli,
                         CONF_CENAOD: cenaod,
