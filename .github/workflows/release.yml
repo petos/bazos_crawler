@@ -27,14 +27,14 @@ jobs:
       - name: Validate manifest version
         run: |
           VERSION_TAG=${GITHUB_REF#refs/tags/v}
-          MANIFEST_VERSION=$(jq -r '.version' custom_components/ha_vodarenska/manifest.json)
+          MANIFEST_VERSION=$(jq -r '.version' custom_components/bazos_crawler/manifest.json)
           echo "Git tag: $VERSION_TAG"
           echo "Manifest version: $MANIFEST_VERSION"
           if [ "$VERSION_TAG" != "$MANIFEST_VERSION" ]; then
-            echo "❌ Version mismatch: tag=$VERSION_TAG manifest=$MANIFEST_VERSION"
+            echo "Version mismatch: tag=$VERSION_TAG manifest=$MANIFEST_VERSION"
             exit 1
           fi
-          echo "✅ Version OK ($VERSION_TAG)"
+          echo "Version OK ($VERSION_TAG)"
 
       - name: Create release
         uses: ncipollo/release-action@v1
