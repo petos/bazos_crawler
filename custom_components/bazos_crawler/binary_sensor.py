@@ -1,53 +1,47 @@
-from datetime import datetime
-
 from homeassistant.components.binary_sensor import BinarySensorEntity
-from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from .const import DOMAIN
 from .entity import BazosEntity
+
 
 async def async_setup_entry(hass, entry, async_add_entities):
     coordinator = hass.data[DOMAIN][entry.entry_id]
     term = entry.data["search_term"]
 
     async_add_entities([
-        BazosNewTodayBinarySensor(coordinator, term)
+        BazosNewItemsBinarySensor(coordinator, term)
     ])
 
 
-class BazosNewTodayBinarySensor(BazosEntity, BinarySensorEntity):
-    def __init__(self, coordinator, term):
-        super().__init__(coordinator, term)
-        self._seen_ids = set()
-        self._triggered = False
-
-    def _is_today(self, item):
-        return item.get("date") == datetime.now().date()
-
+class BazosNewItemsBinarySensor(BazosEntity, BinarySensorEntity):
     @property
-    def is_on(self):
-        items = self.coordinator.data.get("items", [])
-
-        current_ids = {i["id"] for i in items if "id" in i}
-        new_ids = current_ids - self._seen_ids
-
-        self._seen_ids.update(current_ids)
-
-        new_today = any(
-            i["id"] in new_ids and self._is_today(i)
-            for i in items
-        )
-
-        if new_today:
-            self._triggered = True
-            return True
-
-        if self._triggered:
-            self._triggered = False
-            return False
-
-        return False
+    def name(self):
+        return f"Bazos {self._term} nové inzeráty"
 
     @property
     def unique_id(self):
-        return f"{DOMAIN}_{self._slug}_new_today"
+        return f"{self.coordinator.config_entry.entry_id}_new"
+
+    @property
+    def is_on(self):
+        return self.coordinator.data.get("new_count", 0) > 0
+
+    @property
+    def extra_state_attributes(self):
+        data = self.coordinator.data or {}
+        new_items = data.get("new_items", [])
+
+        # limit kvůli HA (doporučeno)
+        new_items = new_items[:10]
+
+        return {
+            "new_count": data.get("new_count", 0),
+            "new_items": [
+                {
+                    "title": item["title"],
+                    "price": item["price"],
+                    "url": item["link"],
+                }
+                for item in new_items
+            ],
+        }
